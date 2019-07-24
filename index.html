@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Country Details</title>
+  <style type="text/css">
+    .centerDiv
+    {
+      width: 100%;
+      height:200px;
+      margin: 0 auto;
+    
+    }
+    .container
+    {
+      width: 50%;
+      height:200px;
+      margin: 0 auto;
+    
+    }
+    </style>
+  
+</head>
+<body>
+  <div class="container">
+    <h1 class="display-4 mb-4">Country Details</h1>
+    <div class="d-flex">
+      <input type="text" id='a'/>
+      <button  id="getPosts" onclick="getDetails(document.getElementById('a').value)">Get Details</button>
+    </div>
+    <hr>
+    <div id="output"></div>
+    
+  </div>
+
+  <script>
+    
+    function getDetails(a){
+      fetch('https://restcountries.eu/rest/v2/all')
+      .then((res) => res.json())
+      .then((data) => {
+        let output = '<h2 class="mb-4"></h2>';
+        data.forEach(function(post){
+          if(post.name== "Iraq")
+          {output += `
+            <div class="centerDiv">
+              <img src="${post.flag}" height="400" width="700"/>
+              <p><font size="4">Country Name:</font>  ${post.name}</p>
+              
+              <p><font size="4">Top Level Domain:</font>  ${post.topLevelDomain}</p>
+              <p><font size="4">Alpha2Code:</font>  ${post.alpha2Code}</p>
+              <p><font size="4">Alpha3Code:</font>  ${post.alpha3Code}</p>
+              <p><font size="4">CallingCodes:</font>  ${post.callingCodes}</p>
+              <p><font size="4">Capital:</font>  ${post.capital}</p>
+              <p><font size="4">altSpellings:</font>  ${post.altSpellings}</p>
+              <p><font size="4">Region:</font>  ${post.region}</p>
+              <p><font size="4">Sub Region:</font>  ${post.subregion}</p>
+              <p><font size="4">Population:</font>  ${post.population}</p>
+              <p><font size="4">Latlang:</font>  ${post.latlng}</p>
+              <p><font size="4">Demonym:</font>  ${post.demonym}</p>
+              <p><font size="4">Area:</font>  ${post.area}</p>
+              <p><font size="4">Gini:</font>  ${post.gini}</p>
+              <p><font size="4">Time Zones:</font>  ${post.timezones}</p>
+              <p><font size="4">Borders:</font>  ${post.borders}</p>
+              <p><font size="4">Native Name:</font>  ${post.nativeName}</p>
+              <p><font size="4">Numeric Code:</font>  ${post.numericCode}</p>
+              <p><font size="4">Currenices:</font>  ${post.currencies.filter(c => c.name).map(c => `${c.name}  (${c.code}) Symbol =${c.symbol}`).join(", ")}</p>
+              <p><font size="4">Languages:</font>  ${post.languages.filter(c => c.name).map(c => `${c.name} ${c.iso639_1} ${c.iso639_2}  (${c.nativeName}) `).join(", ")}</p>
+  
+            </div>
+          `;
+          }
+        });
+        document.getElementById('output').innerHTML = output;
+      })
+    }
+
+    
+  </script>
+</body>
+</html>
